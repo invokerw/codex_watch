@@ -1,0 +1,32 @@
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "codex-watch"
+dynamic = ["version"]
+description = "Local Codex model monitoring and searchable chat captures"
+readme = "PACKAGING.md"
+requires-python = ">=3.12,<3.13"
+dependencies = ["mitmproxy==11.1.3"]
+
+[project.scripts]
+codex-watch = "codex_watch.cli:main"
+
+[project.urls]
+Repository = "https://github.com/invokerw/codex_watch"
+Issues = "https://github.com/invokerw/codex_watch/issues"
+
+[tool.hatch.version]
+path = "codex_watch/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["codex_watch"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "/codex_watch", "/pyproject.toml", "/PACKAGING.md", "/README.md",
+  "/requirements.txt", "/codex_dump.py", "/codex_capture.py",
+  "/capture_core.py", "/capture_analysis.py", "/chat_monitor.py",
+  "/test_*.py", "/scripts/*.py",
+]

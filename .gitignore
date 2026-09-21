@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.py[cod]
+captures/
+.mitmproxy/
+.pytest_cache/
+.DS_Store
+dist/
+build/
+*.egg-info/
+.build-cache/
+.package-test/
