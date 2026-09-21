@@ -2,11 +2,39 @@
 
 在本机监听经代理发出的 Codex 聊天请求，比较请求模型与返回模型，并按输入或回复内容查找对应抓包。支持 HTTP、SSE 和 WebSocket。
 
-本版本以源码和 Python 安装包交付：`codex_watch-0.1.1-py3-none-any.whl`。源码仓库为 [invokerw/codex_watch](https://github.com/invokerw/codex_watch)。尚未制作自带 Python 的独立可执行程序，也未发布到 PyPI。
+本版本以源码和 Python 安装包交付：`codex_watch-0.1.1-py3-none-any.whl`。源码仓库为 [invokerw/codex_watch](https://github.com/invokerw/codex_watch)，正式包已发布到 [PyPI](https://pypi.org/project/codex-watch/)。尚未制作自带 Python 的独立可执行程序。
 
 仓库已经包含 `ci.yml` 和 `release.yml`：推送与 Pull Request 会运行测试；推送匹配 `v*` 的标签时，先验证、构建并创建 GitHub Release，再通过 PyPI Trusted Publishing 上传 wheel 和源码归档。
 
 ## 安装
+
+### 从 PyPI 安装（推荐）
+
+安装已发布版本：
+
+```bash
+uv tool install --python 3.12 codex-watch
+codex-watch --version
+codex-watch doctor
+```
+
+也可以使用 Python 3.12 的虚拟环境：
+
+```bash
+python3.12 -m venv .venv
+.venv/bin/python -m pip install codex-watch
+```
+
+升级到最新版本：
+
+```bash
+uv tool upgrade codex-watch
+# 或在虚拟环境中执行：.venv/bin/python -m pip install --upgrade codex-watch
+```
+
+当前包要求 Python `>=3.12,<3.13`，依赖会由安装器自动获取。PyPI 页面提供 [版本和文件列表](https://pypi.org/project/codex-watch/)。
+
+### 从源码安装
 
 从 GitHub 获取源码：
 
@@ -26,7 +54,9 @@ codex-watch watch
 
 然后在另一个终端的工作项目目录运行 `codex-watch run`。源码包不含依赖、聊天记录或证书；首次安装会获取依赖，首次启动代理会生成本机证书。
 
-安装本地 wheel（路径替换为实际下载位置）：
+### 从本地 wheel 安装
+
+安装本地构建的 wheel（路径替换为实际下载位置）：
 
 ```bash
 uv tool install --python 3.12 /path/to/codex_watch-0.1.1-py3-none-any.whl
