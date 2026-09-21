@@ -1,6 +1,6 @@
 # Codex 请求抓包工具
 
-现已提供可安装的 **`codex-watch` 命令行工具**。本地安装、数据目录和跨平台验证说明见 [PACKAGING.md](PACKAGING.md)。安装版在任意目录运行，使用用户数据目录；下文 `python3 codex_dump.py ...` 命令使用源码目录内的数据。
+现已提供可安装的 **`codex-watch` 命令行工具**。本地安装、数据目录、GitHub Actions 发布和跨平台验证说明见 [PACKAGING.md](PACKAGING.md)。安装版在任意目录运行，使用用户数据目录；下文 `python3 codex_dump.py ...` 命令使用源码目录内的数据。
 
 实时查看 Codex 聊天的请求模型与返回模型是否一致，并按聊天内容找到对应抓包数据。底层使用本机 HTTP(S) 代理，支持 HTTP、SSE 和 WebSocket。
 

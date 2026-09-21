@@ -4,6 +4,8 @@
 
 本版本以源码和 Python 安装包交付：`codex_watch-0.1.1-py3-none-any.whl`。源码仓库为 [invokerw/codex_watch](https://github.com/invokerw/codex_watch)。尚未制作自带 Python 的独立可执行程序，也未发布到 PyPI。
 
+仓库已经包含 `ci.yml` 和 `release.yml`：推送与 Pull Request 会运行测试；推送匹配 `v*` 的标签时，先验证、构建并创建 GitHub Release，再通过 PyPI Trusted Publishing 上传 wheel 和源码归档。
+
 ## 安装
 
 从 GitHub 获取源码：
@@ -118,6 +120,33 @@ uv tool uninstall codex-watch      # uv 自身的卸载命令仍只移除程序
 ```
 
 自动卸载会验证当前程序确实来自该 uv 工具环境，避免误卸载另一个安装。对于源码或普通虚拟环境安装，先 `purge`，再用原安装方式卸载程序。若数据清理成功但 uv 卸载失败，会明确报告部分完成的状态。
+
+## 发布到 GitHub Release 和 PyPI
+
+发布前先把 `codex_watch/__init__.py` 中的 `__version__` 改成新版本，例如 `0.1.2`，提交到 `main`。然后在 PyPI 的账号发布设置中登记一次 Trusted Publisher：
+
+| 字段 | 值 |
+| --- | --- |
+| PyPI 项目名 | `codex-watch` |
+| Owner | `invokerw` |
+| Repository | `codex_watch` |
+| Workflow filename | `release.yml` |
+| Environment | `pypi` |
+
+GitHub 仓库 Settings → Environments 中创建同名 `pypi` environment；建议给它配置 required reviewer，发布 job 会在上传前等待审批。PyPI Trusted Publishing 使用短期 OIDC 凭据，不需要在 GitHub Secrets 保存长期 PyPI token。PyPI 还未创建项目时，可以在 PyPI 的 Publishing 页面添加 pending publisher；首次成功发布会创建项目。
+
+然后推送版本标签：
+
+```bash
+git tag v0.1.2
+git push origin v0.1.2
+```
+
+Actions 会依次执行测试、构建、创建 GitHub Release、上传 PyPI。标签版本必须和 `__version__` 一致；重复运行同一个标签会更新 Release 附件，但 PyPI 对已存在的同版本文件仍会拒绝重复上传。
+
+如果希望先试运行，可以在 TestPyPI 注册相同的 Trusted Publisher，把 workflow 的发布地址改为 TestPyPI，或另外增加一个带 `repository-url: https://test.pypi.org/legacy/` 的发布 job。正式 workflow 默认只上传 PyPI，不会自动上传 TestPyPI。
+
+安全边界：只有匹配 `v*` 的标签触发发布；测试和构建 job 没有 `id-token` 权限，只有 `publish-pypi` job 有 `id-token: write`；发布 workflow 位于固定的 `.github/workflows/release.yml`。不要让不受信任的贡献者直接修改该 workflow。
 
 ## 构建与验证
 

@@ -30,7 +30,7 @@ def main():
             raise RuntimeError(f"Expected an installed package, got {location}")
         print(f"Testing installed package: {location}", flush=True)
         return subprocess.run([python, "-m", "unittest", "-v", "test_capture_core", "test_capture_analysis",
-                               "test_chat_monitor", "test_packaging", "test_removal", "test_proxy_integration"],
+                               "test_chat_monitor", "test_packaging", "test_removal", "test_workflows", "test_proxy_integration"],
                               cwd=directory, env=env).returncode
 
 
