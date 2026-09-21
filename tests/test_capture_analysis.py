@@ -6,7 +6,7 @@ import tempfile
 import unittest
 
 from codex_watch.analysis import analyze, render_markdown, write_reports
-from test_support import cli_command
+from tests.test_support import cli_command
 
 URL = "https://chatgpt.com/backend-api/codex/responses"
 

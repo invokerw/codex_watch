@@ -7,8 +7,8 @@ import unittest
 
 from codex_watch.core import SSEEventDecoder
 from codex_watch.monitor import ChatIndex, Monitor, latest_user_text, render_detail, render_search
-from test_support import cli_command
-from test_capture_analysis import request, response, ws, metadata
+from tests.test_support import cli_command
+from tests.test_capture_analysis import request, response, ws, metadata
 
 
 def user_request(model="model-a", flow="f1", thread="t1", turn="turn-1", content="修复登录失败", **extra):
@@ -134,7 +134,7 @@ class MonitorTests(unittest.TestCase):
         self.assertNotIn("[模型不一致]", "\n".join(lines))
 
     def test_sse_updates_before_http_response_and_final_body_is_not_replayed(self):
-        from test_capture_analysis import record
+        from tests.test_capture_analysis import record
         self.append(record("request", method="POST", request={"body": {"json": {"model": "model-a", "input": "流式聊天"}}}),
                     record("sse_event", body={"json": {"type": "response.created", "response": {"id": "r", "model": "model-b"}}}))
         lines, _ = self.monitor.poll()

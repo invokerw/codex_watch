@@ -12,7 +12,7 @@ from unittest.mock import patch
 from codex_watch.lifecycle import data_locks
 from codex_watch.monitor import ChatIndex
 from codex_watch.removal import removal_targets, run_removal, uv_uninstaller
-from test_support import cli_command
+from tests.test_support import cli_command
 
 
 class RemovalTests(unittest.TestCase):

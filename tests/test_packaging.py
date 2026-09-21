@@ -12,7 +12,7 @@ import zipfile
 
 import codex_watch
 from codex_watch.platform_support import data_directory
-from test_support import cli_command
+from tests.test_support import cli_command
 
 
 class PackagingTests(unittest.TestCase):
@@ -56,7 +56,7 @@ class PackagingTests(unittest.TestCase):
                 self.assertEqual(info["mitmproxy"], "11.1.3")
 
     def test_wheel_contains_only_package_and_metadata(self):
-        dist = Path(os.environ.get("CODEX_WATCH_TEST_DIST", Path(__file__).parent / "dist"))
+        dist = Path(os.environ.get("CODEX_WATCH_TEST_DIST", Path(__file__).resolve().parents[1] / "dist"))
         wheel = dist / f"codex_watch-{codex_watch.__version__}-py3-none-any.whl"
         if not wheel.exists():
             self.skipTest("Build the wheel first to inspect its contents")
@@ -74,7 +74,7 @@ class PackagingTests(unittest.TestCase):
                 f"codex_watch-{codex_watch.__version__}.dist-info/entry_points.txt").decode())
 
     def test_source_archive_excludes_local_data(self):
-        dist = Path(os.environ.get("CODEX_WATCH_TEST_DIST", Path(__file__).parent / "dist"))
+        dist = Path(os.environ.get("CODEX_WATCH_TEST_DIST", Path(__file__).resolve().parents[1] / "dist"))
         path = dist / f"codex_watch-{codex_watch.__version__}.tar.gz"
         if not path.exists():
             self.skipTest("Build the source archive first to inspect its contents")

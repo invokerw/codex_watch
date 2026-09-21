@@ -184,8 +184,7 @@ Actions 会依次执行测试、构建、创建 GitHub Release、上传 PyPI。�
 
 ```bash
 uv build --python 3.12 --out-dir dist
-python3 -m unittest -v test_capture_core test_capture_analysis test_chat_monitor test_packaging test_removal
-.venv/bin/python -m unittest -v test_proxy_integration
+python3 -m unittest discover -s tests -p 'test_*.py' -v
 ```
 
 验证安装包时，在独立环境安装后运行以下脚本。脚本把测试复制到临时目录，移除 `PYTHONPATH`，确认程序从新环境的 `site-packages` 加载，再执行全部测试：

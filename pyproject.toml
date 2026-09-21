@@ -28,5 +28,5 @@ include = [
   "/codex_watch", "/pyproject.toml", "/PACKAGING.md", "/README.md",
   "/requirements.txt", "/codex_dump.py", "/codex_capture.py",
   "/capture_core.py", "/capture_analysis.py", "/chat_monitor.py",
-  "/test_*.py", "/scripts/*.py", "/.github/workflows/*.yml",
+  "/tests/*.py", "/scripts/*.py", "/.github/workflows/*.yml",
 ]

@@ -34,7 +34,7 @@ jobs:
       - name: Build wheel and source distribution
         run: python -m build --outdir dist
       - name: Run tests
-        run: python -m unittest -v test_capture_core test_capture_analysis test_chat_monitor test_packaging test_removal test_proxy_integration
+        run: python -m unittest discover -s tests -p 'test_*.py' -v
       - name: Store release distributions
         uses: actions/upload-artifact@v4
         with:

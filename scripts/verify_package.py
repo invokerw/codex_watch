@@ -17,8 +17,8 @@ def main():
     python = str(args.python.absolute())  # Preserve virtual-environment symlink.
     with tempfile.TemporaryDirectory(prefix="codex-watch-installed-") as temp:
         directory = Path(temp)
-        for path in root.glob("test_*.py"):
-            shutil.copy2(path, directory / path.name)
+        shutil.copytree(root / "tests", directory / "tests")
+        shutil.copytree(root / ".github", directory / ".github")
         env = dict(os.environ, CODEX_WATCH_TEST_INSTALLED="1", CODEX_WATCH_TEST_DIST=str(args.dist.resolve()),
                    CODEX_WATCH_HOME=str(directory / "user data"), PYTHONNOUSERSITE="1", PYTHONUTF8="1")
         env.pop("PYTHONPATH", None)
@@ -29,8 +29,7 @@ def main():
         if "site-packages" not in location.parts or root / "codex_watch" in location.parents:
             raise RuntimeError(f"Expected an installed package, got {location}")
         print(f"Testing installed package: {location}", flush=True)
-        return subprocess.run([python, "-m", "unittest", "-v", "test_capture_core", "test_capture_analysis",
-                               "test_chat_monitor", "test_packaging", "test_removal", "test_workflows", "test_proxy_integration"],
+        return subprocess.run([python, "-m", "unittest", "discover", "-s", "tests", "-p", "test_*.py", "-v"],
                               cwd=directory, env=env).returncode
 
 

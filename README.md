@@ -218,10 +218,7 @@ codex
 核心测试仅使用 Python 标准库；集成测试需要已安装的 mitmproxy 依赖，并会监听临时本地端口：
 
 ```bash
-python3 -m unittest -v test_capture_core
-python3 -m unittest -v test_capture_analysis
-python3 -m unittest -v test_chat_monitor
-.venv/bin/python -m unittest -v test_proxy_integration
+python3 -m unittest discover -s tests -p 'test_*.py' -v
 ```
 
 核心测试覆盖内容索引、聊天归组、模型比较、断点恢复、日志轮换及读写并行。集成测试生成临时 CA 和 HTTPS 服务，验证真实 HTTPS 代理、压缩 JSON、SSE 完成前的模型告警和索引、WebSocket 双向消息、域名过滤、上游断连，以及启动器、包装命令和 `watch` 的代理退出清理。不会调用真实 OpenAI API，也不需要账号或 API key；测试结束后停止服务并清理临时文件。
